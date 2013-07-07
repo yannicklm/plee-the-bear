@@ -3,18 +3,6 @@ project(plee-the-bear)
 
 set( GAME_ROOT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" )
 
-get_directory_property(
-  BEAR_ENGINE_INSTALL_EXECUTABLE_DIR DIRECTORY
-  ${BEAR_ROOT_DIRECTORY}/bear-engine
-  DEFINITION BEAR_ENGINE_INSTALL_EXECUTABLE_DIR
-  )
-
-get_directory_property(
-  BEAR_ENGINE_INSTALL_LIBRARY_DIR DIRECTORY
-  ${BEAR_ROOT_DIRECTORY}/bear-engine
-  DEFINITION BEAR_ENGINE_INSTALL_LIBRARY_DIR
-  )
-
 # where the game resources are installed
 if( NOT PTB_INSTALL_DATA_DIR )
   set( PTB_INSTALL_DATA_DIR share/plee-the-bear )
@@ -93,7 +81,7 @@ include(FindBoost)
 find_package( Boost 1.35 REQUIRED COMPONENTS signals)
 
 if( NOT Boost_FOUND )
-  message( FATAL_ERROR 
+  message( FATAL_ERROR
     "You must have boost::filesystem and boost::thread libraries installed (at least 1.35)" )
 endif( NOT Boost_FOUND )
 add_definitions(-D BOOST_FILESYSTEM_VERSION=2)
@@ -129,6 +117,10 @@ else( BEAR_ITEMS_INCLUDE_DIRECTORY )
   include_directories( ${BEAR_ROOT_DIRECTORY}/bear-engine/lib/src )
 endif( BEAR_ITEMS_INCLUDE_DIRECTORY )
 
+link_directories(
+  "/home/yannick/src/3rdpart/bear/bear-engine/bin"
+)
+
 #-------------------------------------------------------------------------------
 subdirs(
   src
@@ -156,7 +148,7 @@ if(UNIX)
   ELSE(APPLE)
     SET(DYLIB_EXTENSION "so")
   ENDIF(APPLE)
-  
+
   configure_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/release/plee-the-bear.in"
     "${CMAKE_CURRENT_BINARY_DIR}/release/plee-the-bear"

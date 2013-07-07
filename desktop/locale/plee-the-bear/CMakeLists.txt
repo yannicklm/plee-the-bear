@@ -1,4 +1,4 @@
-gettext_create_translations_custom(
+gettext_create_translations(
   ptb-translations
   plee-the-bear.pot
   fr.po
